@@ -1,0 +1,28 @@
+{
+  "@@locale": "en",
+  "appTitle": "Inner Circle",
+  "navBody": "Body",
+  "navCircle": "Circle",
+  "navMe": "Me",
+  "navAdd": "Add",
+  "bodyTitle": "Your body",
+  "bodyEmpty": "No programs yet. Your organ programs will appear on the body map.",
+  "circleTitle": "Circle",
+  "circleEmpty": "Your inner circle will live here: friends' progress, cheers, nudges and asks.",
+  "meTitle": "Me",
+  "meEnvironment": "Environment",
+  "meApiBaseUrl": "API",
+  "meServerVersion": "Server version",
+  "quickAddTitle": "Quick add",
+  "quickAddBody": "Check-ins, meals and new programs will start here.",
+  "connectionChecking": "Checking server…",
+  "connectionConnected": "Connected",
+  "connectionConnectedDetail": "Server {version}",
+  "@connectionConnectedDetail": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
+  "connectionOffline": "Can't reach the server",
+  "connectionRetry": "Retry"
+}

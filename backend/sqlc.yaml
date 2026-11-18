@@ -1,0 +1,18 @@
+# sqlc: typed, parameterized SQL. Add one `sql` block per module as modules appear.
+# Run via `make gen-go`.
+version: "2"
+sql:
+  - engine: postgresql
+    schema: migrations
+    queries: queries/platform.sql
+    gen:
+      go:
+        package: platformdb
+        out: internal/platform/db/platformdb
+        sql_package: pgx/v5
+        emit_json_tags: false
+        overrides:
+          - db_type: timestamptz
+            go_type: time.Time
+          - db_type: uuid
+            go_type: github.com/google/uuid.UUID

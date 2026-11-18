@@ -1,0 +1,45 @@
+# Local development stack. Started by `make infra-up` (or `make dev`).
+# Host ports are configurable in .env so they don't clash with other projects.
+name: inner-circle
+
+services:
+  postgres:
+    image: postgres:17-alpine # keep in sync with backend/internal/server/server_integration_test.go
+    environment:
+      POSTGRES_USER: inner_circle
+      POSTGRES_PASSWORD: inner_circle # local-only credential
+      POSTGRES_DB: inner_circle
+    ports:
+      - "${POSTGRES_PORT:-55432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U inner_circle -d inner_circle"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  # S3-compatible object storage (avatars, meal photos, documents from Phase 1 on).
+  # SeaweedFS replaces MinIO, which stopped publishing community images.
+  s3:
+    image: chrislusf/seaweedfs:4.50
+    command: >-
+      server -dir=/data -s3 -s3.port=8333
+      -s3.config=/etc/seaweedfs/s3.json
+      -master.volumeSizeLimitMB=256
+    ports:
+      - "${S3_PORT:-58333}:8333"
+    volumes:
+      - s3data:/data
+      - ./seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
+
+  # Catches outgoing email (OTP codes from Phase 1). UI on MAILPIT_UI_PORT.
+  mailpit:
+    image: axllent/mailpit:v1.34
+    ports:
+      - "${MAILPIT_UI_PORT:-58025}:8025"
+      - "${MAILPIT_SMTP_PORT:-51025}:1025"
+
+volumes:
+  pgdata:
+  s3data:

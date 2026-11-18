@@ -1,0 +1,16 @@
+# Hot reload for the API in local dev: `make dev` (or `make api`).
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  cmd = "go build -o ./tmp/api ./cmd/api"
+  entrypoint = ["./tmp/api"]
+  include_ext = ["go", "sql"]
+  exclude_dir = ["tmp", "tools", "cmd/worker", "cmd/migrate"]
+  exclude_regex = ["_test\\.go$"]
+  delay = 300
+  kill_delay = "5s"
+  send_interrupt = true
+
+[log]
+  main_only = true

@@ -1,0 +1,9 @@
+# oapi-codegen config: generates the strict net/http server and models from api/openapi.yaml.
+# Run via `make gen-go` (never edit internal/api/api.gen.go by hand).
+package: api
+output: internal/api/api.gen.go
+generate:
+  std-http-server: true
+  strict-server: true
+  models: true
+  embedded-spec: true

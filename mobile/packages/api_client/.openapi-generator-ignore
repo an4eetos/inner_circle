@@ -1,0 +1,6 @@
+# Files we own; openapi-generator must not overwrite them on `make gen-dart`.
+pubspec.yaml
+build.yaml
+analysis_options.yaml
+README.md
+.gitignore

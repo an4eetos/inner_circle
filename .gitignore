@@ -34,3 +34,6 @@ go.work.sum
 # .vscode/
 
 .DS_Store
+
+# Private architecture / planning docs
+docs/architecture/

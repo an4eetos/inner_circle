@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* Design tokens, matched to the app screens (docs/screens). Dark-first like the app. */
+:root {
+  --bg: #0d1015;
+  --surface: #161b22;
+  --surface-2: #1d232c;
+  --border: #262d38;
+  --text: #f2f4f7;
+  --text-muted: #8b94a3;
+  --mint: #4fe3ae;
+  --amber: #ffb547;
+  --periwinkle: #8c9eff;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-mint: var(--mint);
+  --color-amber: var(--amber);
+  --color-periwinkle: var(--periwinkle);
+  --font-sans: var(--font-geist-sans);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}

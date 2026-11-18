@@ -62,3 +62,7 @@ Inner Circle sits in the gap: **organ-level programs + accountability from frien
 ## First experiment
 
 Recruit 15–20 people who are on an active treatment or habit program. Give half of them a circle with nudges and bets, and run it for 4 weeks. Compare daily check-in rates and week-4 retention between people with a circle and people without one.
+
+## Development
+
+Go API, Flutter app (iOS + Android), Next.js web, PostgreSQL. See [DEVELOPMENT.md](DEVELOPMENT.md).

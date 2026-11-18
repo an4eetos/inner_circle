@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Format check on staged files. Install with `make hooks`. Skip once with `git commit --no-verify`.
+set -euo pipefail
+
+staged() { git diff --cached --name-only --diff-filter=ACMR -- "$@"; }
+fail=0
+
+go_files=$(staged 'backend/*.go' | grep -v '\.gen\.go$' | grep -v '/platformdb/' || true)
+if [[ -n "$go_files" ]]; then
+  unformatted=$(cd backend && gofmt -l $(sed 's#^backend/##' <<<"$go_files"))
+  if [[ -n "$unformatted" ]]; then
+    echo "gofmt needed in backend/:"; echo "$unformatted"; fail=1
+  fi
+fi
+
+dart_files=$(staged 'mobile/lib/*.dart' 'mobile/test/*.dart' | grep -v '\.g\.dart$' | grep -v '/l10n/gen/' || true)
+if [[ -n "$dart_files" ]]; then
+  if ! (cd mobile && dart format --output=none --set-exit-if-changed $(sed 's#^mobile/##' <<<"$dart_files") >/dev/null); then
+    echo "dart format needed in mobile/ (run: cd mobile && dart format lib test)"; fail=1
+  fi
+fi
+
+web_files=$(staged 'web/src/*' | grep -v '^web/src/gen/' || true)
+if [[ -n "$web_files" ]]; then
+  if ! (cd web && npx --no-install prettier --check $(sed 's#^web/##' <<<"$web_files") >/dev/null 2>&1); then
+    echo "prettier needed in web/ (run: cd web && npm run format)"; fail=1
+  fi
+fi
+
+if [[ "$fail" -ne 0 ]]; then
+  echo "pre-commit: formatting check failed (run 'make fmt')."
+  exit 1
+fi
